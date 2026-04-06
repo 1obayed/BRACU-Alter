@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRACU Alter - Recruitment Application</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent: #3b82f6;
+            --accent-dark: #1e40af;
+            --success: #10b981;
+            --error: #ef4444;
+            --border: #e2e8f0;
+            --border-dark: #cbd5e1;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --subteam-1: #8b5cf6;
+            --subteam-2: #ec4899;
+            --subteam-3: #f59e0b;
+            --subteam-4: #06b6d4;
+            --subteam-5: #14b8a6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #f1f5f9 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 50px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            border-radius: 2px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .form-grid.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.15s; }
+        .form-group:nth-child(3) { animation-delay: 0.2s; }
+        .form-group:nth-child(4) { animation-delay: 0.25s; }
+        .form-group:nth-child(5) { animation-delay: 0.3s; }
+        .form-group:nth-child(6) { animation-delay: 0.35s; }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .required {
+            color: var(--error);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="url"],
+        input[type="number"],
+        select,
+        textarea {
+            padding: 12px 14px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text);
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="url"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        input[type="text"]::placeholder,
+        input[type="email"]::placeholder,
+        input[type="tel"]::placeholder,
+        input[type="url"]::placeholder,
+        textarea::placeholder {
+            color: var(--text-secondary);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--accent);
+        }
+
+        .checkbox-wrapper label {
+            margin: 0;
+            font-weight: 500;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .subteam-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .subteam-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+        }
+
+        .subteam-card input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .subteam-card input[type="radio"]:checked + .subteam-content {
+            color: white;
+        }
+
+        .subteam-card input[type="radio"]:checked ~ .subteam-badge {
+            display: flex;
+        }
+
+        .subteam-content {
+            transition: color 0.3s ease;
+        }
+
+        .subteam-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .subteam-name {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .subteam-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .subteam-card input[type="radio"]:checked ~ * {
+            color: inherit;
+        }
+
+        .subteam-card:has(input[type="radio"]:checked) {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.02) 100%);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.02) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .subteams-info {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 32px;
+            margin-top: 60px;
+        }
+
+        .subteams-info h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .subteams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .subteam-info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            border-top: 4px solid;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .subteam-info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .subteam-info-card.electronics {
+            border-top-color: var(--subteam-1);
+        }
+
+        .subteam-info-card.mechanical {
+            border-top-color: var(--subteam-2);
+        }
+
+        .subteam-info-card.ai {
+            border-top-color: var(--subteam-3);
+        }
+
+        .subteam-info-card.communication {
+            border-top-color: var(--subteam-4);
+        }
+
+        .subteam-info-card.management {
+            border-top-color: var(--subteam-5);
+        }
+
+        .subteam-info-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .subteam-info-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 40px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-submit:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-reset {
+            background: var(--border);
+            color: var(--text);
+            border: 2px solid transparent;
+        }
+
+        .btn-reset:hover {
+            background: var(--border-dark);
+            border-color: var(--border-dark);
+        }
+
+        .message {
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            animation: slideUp 0.4s ease-out;
+            display: none;
+        }
+
+        .message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+            display: block;
+        }
+
+        .message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-submit.loading {
+            pointer-events: none;
+        }
+
+        .btn-submit.loading .spinner {
+            display: inline-block;
+        }
+
+        .btn-submit.loading span {
+            visibility: hidden;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 20px 15px;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .button-group {
+                flex-direction: column-reverse;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .subteams-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">BRACU Alter</div>
+            <ul class="nav-links">
+                <li><a href="#application">Application</a></li>
+                <li><a href="#subteams">Subteams</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>BRACU Alter Recruitment</h1>
+            <p>Thank you for your interest in joining BRACU Alter. Please complete the following form carefully. The information you provide will help us evaluate your suitability for different subteams.</p>
+        </section>
+
+        <form id="recruitmentForm" class="form-container">
+            <!-- Personal Information -->
+            <div class="form-section">
+                <h2 class="section-title">Personal Information</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="fullName">Full Name <span class="required">*</span></label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bracuId">BRACU ID <span class="required">*</span></label>
+                        <input type="text" id="bracuId" name="bracuId" placeholder="e.g., 20-12345-1" required>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="bracuEmail">BRACU Email (G Suite) <span class="required">*</span></label>
+                        <input type="email" id="bracuEmail" name="bracuEmail" placeholder="your.name@student.bracu.ac.bd" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="personalEmail">Personal Email Address <span class="required">*</span></label>
+                        <input type="email" id="personalEmail" name="personalEmail" placeholder="your.email@example.com" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academic Information -->
+            <div class="form-section">
+                <h2 class="section-title">Academic Information</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="program">Program <span class="required">*</span></label>
+                        <input type="text" id="program" name="program" placeholder="e.g., CSE / EEE / MNS / BBA" required>
+                        <p class="help-text">Example: CSE, EEE, MNS, BBA, etc.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="currentSemester">Current Semester at BRAC University <span class="required">*</span></label>
+                        <input type="number" id="currentSemester" name="currentSemester" placeholder="e.g., 4" min="1" max="12" required>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="rsSemester">RS Semester (If Applicable)</label>
+                        <input type="number" id="rsSemester" name="rsSemester" placeholder="e.g., 2" min="0" max="12">
+                        <p class="help-text">Leave blank if not applicable</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+880 1XX XXX XXXX" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subteam Selection -->
+            <div class="form-section">
+                <h2 class="section-title">Subteam Preference</h2>
+                <div class="info-box">
+                    <strong>Select the subteam you are applying for:</strong> Click on your preferred subteam below. You can add a secondary preference in the motivation section.
+                </div>
+                <div class="form-grid full">
+                    <div class="form-group">
+                        <label style="margin-bottom: 16px;">Primary Preference <span class="required">*</span></label>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                            <div class="subteam-card">
+                                <input type="radio" id="subteam-electronics" name="primarySubteam" value="Electronics" required>
+                                <div class="subteam-content">
+                                    <div class="subteam-name">Electronics</div>
+                                    <div class="subteam-desc">Electrical systems & circuit design</div>
+                                </div>
+                                <div class="subteam-badge">✓</div>
+                            </div>
+
+                            <div class="subteam-card">
+                                <input type="radio" id="subteam-mechanical" name="primarySubteam" value="Mechanical" required>
+                                <div class="subteam-content">
+                                    <div class="subteam-name">Mechanical</div>
+                                    <div class="subteam-desc">Rover structure & CAD design</div>
+                                </div>
+                                <div class="subteam-badge">✓</div>
+                            </div>
+
+                            <div class="subteam-card">
+                                <input type="radio" id="subteam-ai" name="primarySubteam" value="AI and Control" required>
+                                <div class="subteam-content">
+                                    <div class="subteam-name">AI & Control</div>
+                                    <div class="subteam-desc">Autonomous behavior & robotics</div>
+                                </div>
+                                <div class="subteam-badge">✓</div>
+                            </div>
+
+                            <div class="subteam-card">
+                                <input type="radio" id="subteam-communication" name="primarySubteam" value="Communication and Vision" required>
+                                <div class="subteam-content">
+                                    <div class="subteam-name">Communication & Vision</div>
+                                    <div class="subteam-desc">Computer vision & networking</div>
+                                </div>
+                                <div class="subteam-badge">✓</div>
+                            </div>
+
+                            <div class="subteam-card">
+                                <input type="radio" id="subteam-management" name="primarySubteam" value="Management and Outreach" required>
+                                <div class="subteam-content">
+                                    <div class="subteam-name">Management & Outreach</div>
+                                    <div class="subteam-desc">Coordination & sponsorships</div>
+                                </div>
+                                <div class="subteam-badge">✓</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills & Resume -->
+            <div class="form-section">
+                <h2 class="section-title">Skills & Resume</h2>
+                <div class="form-group" style="margin-bottom: 24px;">
+                    <label for="relevantSkills">Relevant Skills (Optional)</label>
+                    <textarea id="relevantSkills" name="relevantSkills" placeholder="Examples: Programming (C/C++/Python/MATLAB), PCB Design, SolidWorks, Fusion 360, Computer Vision, Project Management, etc."></textarea>
+                    <p class="help-text">List any relevant technical or soft skills</p>
+                </div>
+                <div class="form-group">
+                    <label for="resumeLink">Resume / CV (Google Drive Link) <span class="required">*</span></label>
+                    <input type="url" id="resumeLink" name="resumeLink" placeholder="https://drive.google.com/file/d/..." required>
+                    <p class="help-text">Provide a publicly accessible Google Drive link to your resume or CV</p>
+                </div>
+            </div>
+
+            <!-- Motivation -->
+            <div class="form-section">
+                <h2 class="section-title">Motivation & Additional Info</h2>
+                <div class="form-group">
+                    <label for="motivation">Why do you want to join this subteam? <span class="required">*</span></label>
+                    <textarea id="motivation" name="motivation" placeholder="Briefly explain your motivation and interest. You can also mention a secondary preference here." required></textarea>
+                    <p class="help-text">Include your motivation, and optionally mention a secondary subteam preference</p>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <button type="reset" class="btn-reset">Clear Form</button>
+                <button type="submit" class="btn-submit">
+                    <span>Submit Application</span>
+                    <div class="spinner"></div>
+                </button>
+            </div>
+
+            <div id="message" class="message"></div>
+        </form>
+
+        <!-- Subteams Information Section -->
+        <div id="subteams" class="subteams-info">
+            <h2>Subteam Descriptions</h2>
+            <div class="subteams-grid">
+                <div class="subteam-info-card electronics">
+                    <h3>🔌 Electronics Subteam</h3>
+                    <p>Works on the rover's electrical systems including sensor integration, circuit design and testing, battery pack management, power distribution planning, power budgeting, and PCB design to ensure reliable hardware operation across all rover subsystems.</p>
+                </div>
+
+                <div class="subteam-info-card mechanical">
+                    <h3>⚙️ Mechanical Subteam</h3>
+                    <p>Responsible for designing and developing the rover's physical structure including chassis design, suspension and drivetrain planning, CAD modeling using engineering tools (SolidWorks, Fusion 360, Ansys), simulation and structural analysis, and testing.</p>
+                </div>
+
+                <div class="subteam-info-card ai">
+                    <h3>🤖 AI & Control Subteam</h3>
+                    <p>Develops the rover's autonomous behavior and motion control systems including control system modeling, sensor-based decision making, path planning, feedback control (PID), ROS2-based robotic software integration, and embedded system interfacing.</p>
+                </div>
+
+                <div class="subteam-info-card communication">
+                    <h3>📡 Communication & Vision Subteam</h3>
+                    <p>Works on computer vision and rover communication systems including camera feed processing, object and hazard detection, base station connectivity, router-to-router communication setup, telemetry transmission, and communication protocol implementation.</p>
+                </div>
+
+                <div class="subteam-info-card management">
+                    <h3>📊 Management & Outreach Subteam</h3>
+                    <p>Supports project coordination, documentation, scheduling, branding and promotional materials (Photoshop, Canva), sponsorship communication, outreach activities, innovation/startup competition participation, and maintaining external collaborations.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 BRACU Alter. All rights reserved. | Best of luck with your application!</p>
+    </footer>
+
+    <script>
+        // Replace with your Google Apps Script URL
+        const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+        document.getElementById('recruitmentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('YOUR_GOOGLE_APPS_SCRIPT_URL')) {
+                showMessage('⚠️ Please configure the Google Apps Script URL in the form code.', 'error');
+                return;
+            }
+
+            const submitBtn = document.querySelector('.btn-submit');
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+
+            const formData = new FormData(document.getElementById('recruitmentForm'));
+            const data = {
+                timestamp: new Date().toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }),
+                fullName: formData.get('fullName'),
+                bracuId: formData.get('bracuId'),
+                bracuEmail: formData.get('bracuEmail'),
+                personalEmail: formData.get('personalEmail'),
+                program: formData.get('program'),
+                currentSemester: formData.get('currentSemester'),
+                rsSemester: formData.get('rsSemester') || 'N/A',
+                phoneNumber: formData.get('phoneNumber'),
+                primarySubteam: formData.get('primarySubteam'),
+                relevantSkills: formData.get('relevantSkills') || 'None listed',
+                resumeLink: formData.get('resumeLink'),
+                motivation: formData.get('motivation')
+            };
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    mode: 'no-cors'
+                });
+
+                showMessage('✓ Your application has been submitted successfully! Thank you for applying to BRACU Alter.', 'success');
+                document.getElementById('recruitmentForm').reset();
+                window.scrollTo(0, 0);
+            } catch (error) {
+                showMessage('✗ There was an error submitting your application. Please try again or contact the team.', 'error');
+                console.error('Error:', error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+            }
+        });
+
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            setTimeout(() => {
+                if (type === 'success') {
+                    messageDiv.className = 'message';
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
